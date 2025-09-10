@@ -1,0 +1,31 @@
+services:
+    guacd:
+      image: guacamole/guacd:latest
+      restart: unless-stopped
+
+    guacamole:
+      image: guacamole/guacamole:latest
+      links:
+        - guacd
+      environment:
+        GUACD_HOSTNAME: guacd
+        MYSQL_HOSTNAME: mysql 
+        MYSQL_DATABASE: guacamole_db
+        MYSQL_USER: guacamole_user
+        MYSQL_PASSWORD: your_db_password
+      ports:
+        - "30036:8080" 
+      depends_on:
+        mysql
+      restart: unless-stopped
+
+    mysql:
+      image: mysql:13.0
+      environment:
+        MYSQL_ROOT_PASSWORD: Passw0rd
+        MYSQL_DATABASE: guacamole_db
+        MYSQL_USER: guacamole_user
+        MYSQL_PASSWORD: Passw0rd
+      volumes:
+        - /homelab/guacamole/mysql_data:/var/lib/mysql 
+      restart: unless-stopped

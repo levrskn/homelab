@@ -1,0 +1,44 @@
+services:
+  app:
+    image: 'jc21/nginx-proxy-manager:latest'
+    restart: always
+    ports:
+      - '30081:80'   # Public HTTP Port
+      - '30444:443' # Public HTTPS Port
+      - '30082:81'   # Admin Web Port
+    environment:
+      DB_MYSQL_HOST: "db"
+      DB_MYSQL_PORT: 3306
+      DB_MYSQL_USER: "npm-user"
+      DB_MYSQL_PASSWORD: "Passw0rd"
+      DB_MYSQL_NAME: "npm"
+    volumes:
+      - /homelab/npm/npm-app-data:/data
+      - /homelab/npm/letsencrypt:/etc/letsencrypt
+# you can add this if would like to access Nginx Proxy Manager remotely from authenticated devices.
+#      - /run/tailscale.nginx-auth.sock:/run/tailscale.nginx-auth.sock:ro
+    depends_on:
+      - db
+    networks:
+      - frontend
+      - backend
+
+  db:
+    image: 'yobasystems/alpine-mariadb:latest'
+    restart: always
+    ports:
+     - '3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: 'Passw0rd'
+      MYSQL_DATABASE: 'npm'
+      MYSQL_USER: 'npm-user'
+      MYSQL_PASSWORD: 'Passw0rd'
+      MARIADB_AUTO_UPGRADE: '1'
+    volumes:
+      - /homelab/npm/npm-db-mysql:/var/lib/mysql
+    networks:
+      - backend
+
+networks:
+  frontend:
+  backend:

@@ -1,0 +1,16 @@
+services:
+  rancher:
+    image: rancher/rancher:latest
+    restart: always
+    privileged: true
+    ports:
+      - "30060:80"
+      - "30445:443"
+    volumes:
+      - /homelab/rancher/rancher-data:/var/lib/rancher
+    environment:
+      - CATTLE_SERVER_URL=https://rancher.example.com
+    networks:
+      - frontend
+networks:
+  frontend:

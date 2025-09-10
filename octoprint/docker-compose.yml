@@ -1,0 +1,21 @@
+services:
+  octoprint:
+    image: octoprint/octoprint
+    restart: always
+    ports:
+      - "30010:80"
+    devices:
+    # use `python -m serial.tools.miniterm` to see what the name is of the printer, this requires pyserial
+    #  - /dev/ttyACM0:/dev/ttyACM0
+      - /dev/ttyUSB0:/dev/ttyUSB0
+    #  - /dev/video0:/dev/video0
+    volumes:
+      - /homelab/octoprint:/octoprint
+    # uncomment the lines below to ensure camera streaming is enabled when you add a video device
+    #environment:
+    #  - ENABLE_MJPG_STREAMER=true
+    networks:
+      - frontend
+
+networks:
+  frontend:

@@ -1,0 +1,9 @@
+services:
+  openwebui:
+    container_name: openwebui
+    image: ghcr.io/open-webui/open-webui:main
+    restart: always
+    ports:
+      - "30077:8080"
+    volumes:
+      - /homelab/openwebui:/app/backend/data

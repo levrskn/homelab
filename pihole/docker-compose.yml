@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    restart: always
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "67:67/udp"
+      - "30038:80/tcp"
+    environment:
+      TZ: ${TZ}
+      WEBPASSWORD: ${WEBPASSWORD}
+    volumes:
+      - /homelab/pihole/etc-pihole:/etc/pihole
+      - /homelab/pihole/etc-dnsmasq.d:/etc/dnsmasq.d
+    networks:
+      - frontend
+
+networks:
+  frontend:

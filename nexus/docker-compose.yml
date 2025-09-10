@@ -1,0 +1,12 @@
+services:
+  nexus:
+    image: sonatype/nexus3:latest
+    ports:
+      - "8881:8081"
+    volumes:
+      - /homelab/nexus/nexus-data:/nexus-data
+    environment:
+      # Optional: Adjust memory settings if needed
+      - NEXUS_HEAP_MIN=768M
+      - NEXUS_HEAP_MAX=768M
+    restart: unless-stopped

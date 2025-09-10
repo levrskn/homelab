@@ -1,0 +1,17 @@
+services:
+  watchtower:
+    container_name: watchtower
+    image: 'containrrr/watchtower:latest'
+    restart: always
+    ports:
+      - '30033:8080'
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+     # - /root/.docker/config.json:/config.json
+    command: --interval 86400  #Default: 86400 (24 hours) in seconds
+    labels:
+      - "com.centurylinklabs.watchtower.monitor-only=true"
+    networks:
+      - frontend
+networks:
+  frontend:

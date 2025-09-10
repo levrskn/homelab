@@ -1,0 +1,12 @@
+services:
+  uptimekuma:
+    image: 'louislam/uptime-kuma:latest'
+    restart: always
+    ports:
+      - '30021:3001'
+    volumes:
+      - /homelab/uptime-kuma:/app/data
+    networks:
+      - frontend
+networks:
+  frontend:
