@@ -25,6 +25,8 @@ It serves as a central platform for personal projects, self-hosting, and experim
 ![Rancher](https://img.shields.io/badge/Orchestration-Rancher-0075A8?logo=rancher&logoColor=white)
 ![Watchtower](https://img.shields.io/badge/Automation-Watchtower-FF4500?logo=docker&logoColor=white)
 ![Backups](https://img.shields.io/badge/Backup-Custom_Scripts-000000?logo=gnu-bash&logoColor=white)
+![HedgeDoc](https://img.shields.io/badge/HedgeDoc-Online-339933?logo=hedgedoc&logoColor=white)
+
 ## 📌 Features
 
 - Containerized services managed via docker-compose.yml files.
@@ -78,7 +80,7 @@ It serves as a central platform for personal projects, self-hosting, and experim
 - **Rancher** - container orchestration and Kubernetes management.
 - **watchtower** -automatic Docker image update management.
 - **BACKUPS** - custom scripts to back up critical volumes and data offsite.
--
+- **HEDGEDOC** - colaborating with docs management. keep track of your docs. 
 
 ---
 
