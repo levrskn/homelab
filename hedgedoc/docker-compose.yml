@@ -1,0 +1,33 @@
+services:
+  hedgedoc:
+    image: quay.io/hedgedoc/hedgedoc:latest
+    container_name: hedgedoc
+    restart: always
+    environment:
+      CMD_DOMAIN: hedgedoc.mylab.local          # The domain your users access (public)
+      CMD_URL_ADDPORT: "false"                 # Proxy handles standard ports, no need to add port
+      CMD_PROTOCOL_USESSL: "true"              # From HedgeDoc’s perspective, external access is HTTPS
+      CMD_DB_URL: postgres://hedgedoc:passwordT@database:5432/hedgedoc # CHANGE password
+      CMD_ALLOW_ORIGIN: "https://hedgedoc.mylab.local"
+      CMD_SESSION_SECRET: "secret-token"
+      CMD_ALLOW_ANONYMOUS: "false"            # Only registered users can edit
+      CMD_EMAIL: "true"                        # Email login enabled
+
+    depends_on:
+      - database
+    ports:
+      - "40077:3000"                           # Internal HTTP port
+    volumes:
+      - hedgedoc-uploads:/hedgedoc/public/uploads
+
+  database:
+    image: postgres:13.4-alpine
+    container_name: hedgedoc-db
+    restart: always
+    environment:
+      POSTGRES_USER: hedgedoc
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: hedgedoc
+    volumes:
+      - hedgedoc-postgres-data:/var/lib/postgresql/data
+
