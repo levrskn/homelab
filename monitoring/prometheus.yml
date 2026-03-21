@@ -1,0 +1,28 @@
+global:
+  scrape_interval: 30s
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs: [targets: ['localhost:9090']]
+
+  - job_name: 'rpi-nodes'
+    static_configs:
+      - targets: ['X.X.X.X:9100'] 
+        labels:
+          instance: 'raspberrypi'
+
+# add as much targets or jobs as needed down below
+
+  - job_name: 'proxmox-nodes'
+    static_configs:
+      - targets: ['X.X.X.X:9100'] 
+        labels:
+          instance: 'proxmox-01'
+        
+  - job_name: 'ups-peanut'
+    scrape_interval: 30s  # Frequent for UPS changes
+    static_configs:
+      - targets: ['X.X.X.X:8080']
+        labels:
+          instance: 'ups-peanut'
+    metrics_path: /api/v1/metrics
